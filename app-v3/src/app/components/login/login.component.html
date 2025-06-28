@@ -1,0 +1,41 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-md p-6 shadow-lg bg-white">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-6">
+            <span class="text-3xl leading-6 text-slate-900 font-bold text-center w-full">Login with your  account</span>
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="Enter your email" required>
+            <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+  
+        
+  
+          <!-- Password -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Enter your password" required>
+            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+              Password must be at least 8 characters
+            </mat-error>
+          </mat-form-field>
+  
+         
+          <p class="text-sm ml-auto">Create an account? <a routerLink="/signup" class="text-blue-600 hover:underline">signup</a></p>
+          <!-- Submit Button -->
+          <button mat-flat-button color="primary" type="submit" [disabled]="signupForm.invalid"
+            class="w-full py-2 text-white bg-blue-600 hover:bg-blue-700">
+            Sign Up
+          </button>
+        </form>
+  
+    </div>
+  </div>

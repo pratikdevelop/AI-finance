@@ -1,0 +1,242 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- New Header Section -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo/Brand -->
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <svg class="h-8 w-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-2 text-xl font-bold text-gray-900">FinDash</span>
+          </div>
+          <!-- Navigation -->
+          <nav class="hidden md:ml-6 md:flex md:space-x-8">
+            <a routerLink="/dashboard" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Dashboard</a>
+            <a routerLink="/reports" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Reports</a>
+            <a routerLink="/analytics" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Analytics</a>
+          </nav>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="hidden md:ml-4 md:flex md:items-center">
+          <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="sr-only">View notifications</span>
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+          <div class="ml-3 relative">
+            <div>
+              <button type="button" class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu">
+                <span class="sr-only">Open user menu</span>
+                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=80&h=80&q=80" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto p-4 md:p-6">
+    <!-- Header -->
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-center">Financial Dashboard</h1>
+      <p class="mt-2 text-center">Manage your finances in one place</p>
+    </header>
+  
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left Column -->
+      <div class="space-y-6 lg:col-span-2">
+        <!-- Salary and Expense Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Salary Calculation -->
+          <mat-card class="rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <mat-card-header class="mb-4">
+              <mat-card-title class="text-xl font-semibold">Calculate Salary</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="salaryForm" (ngSubmit)="onSalarySubmit()" class="flex flex-col gap-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Hourly Rate ($)</mat-label>
+                  <input matInput type="number" formControlName="rate" required>
+                  <mat-icon matPrefix>attach_money</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Hours Worked</mat-label>
+                  <input matInput type="number" formControlName="hours" required>
+                  <mat-icon matPrefix>schedule</mat-icon>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="salaryForm.invalid" 
+                        class="w-full py-2 font-medium">
+                  Calculate
+                </button>
+              </form>
+              <div *ngIf="salaryResult" class="mt-6 space-y-2 p-4 bg-blue-50 rounded-lg">
+                <div class="flex justify-between">
+                  <span class="font-medium text-gray-700">Weekly Gross:</span>
+                  <span class="font-semibold">${{ salaryResult.weekly.gross_pay | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-medium text-gray-700">Weekly Net:</span>
+                  <span class="font-semibold">${{ salaryResult.weekly.net_pay | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-medium text-gray-700">Monthly Gross:</span>
+                  <span class="font-semibold">${{ salaryResult.monthly.gross | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-medium text-gray-700">Yearly Net:</span>
+                  <span class="font-semibold">${{ salaryResult.yearly.net | number:'1.2-2' }}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+  
+          <!-- Expense Tracking -->
+          <mat-card class="rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <mat-card-header class="mb-4">
+              <mat-card-title class="text-xl font-semibold">Track Expenses</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="expenseForm" (ngSubmit)="onExpenseSubmit()" class="flex flex-col gap-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <input matInput formControlName="description" required>
+                  <mat-icon matPrefix>description</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Amount ($)</mat-label>
+                  <input matInput type="number" formControlName="amount" required>
+                  <mat-icon matPrefix>payments</mat-icon>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="expenseForm.invalid" 
+                        class="w-full py-2 font-medium">
+                  Analyze
+                </button>
+              </form>
+              <div *ngIf="expenseResult" class="mt-6 space-y-3 p-4 bg-green-50 rounded-lg">
+                <h3 class="font-semibold text-lg mb-2">Recommendations:</h3>
+                <div *ngFor="let rec of expenseResult.recommendations" class="flex items-start">
+                  <mat-icon class="text-green-500 mr-2 mt-0.5" style="font-size: 18px;">lightbulb</mat-icon>
+                  <p class="text-gray-700">{{ rec }}</p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+  
+        <!-- Expense Predictions -->
+        <mat-card class="rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <mat-card-header class="mb-4">
+            <mat-card-title class="text-xl font-semibold">Expense Predictions</mat-card-title>
+            <mat-card-subtitle>Next month's forecast</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngIf="predictions" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="p-4 bg-indigo-50 rounded-lg">
+                <p class="text-sm font-medium text-indigo-600">Month</p>
+                <p class="text-lg font-semibold">{{ predictions.month }}</p>
+              </div>
+              <div *ngFor="let prediction of predictions.predictions" 
+                   class="p-4 bg-white border rounded-lg hover:bg-gray-50">
+                <p class="text-sm font-medium">{{ prediction.key | titlecase }}</p>
+                <p class="text-lg font-semibold">${{ prediction.value | number:'1.2-2' }}</p>
+              </div>
+            </div>
+            <div *ngIf="!predictions" class="text-center py-8 text-gray-500">
+              <mat-icon class="text-4xl mb-2 text-gray-300">bar_chart</mat-icon>
+              <p>No prediction data available</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+  
+        <!-- Financial Records -->
+        <mat-card class="rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <mat-card-header class="mb-4">
+            <mat-card-title class="text-xl font-semibold">Financial Records</mat-card-title>
+            <mat-card-subtitle>Historical data</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="overflow-x-auto">
+            <mat-table [dataSource]="records" class="w-full min-w-[600px]">
+              <ng-container matColumnDef="weekly.gross_pay">
+                <mat-header-cell *matHeaderCellDef class="font-bold">Weekly Gross</mat-header-cell>
+                <mat-cell *matCellDef="let record" class="font-medium">${{ record.weekly.gross_pay | number:'1.2-2' }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="weekly.net_pay">
+                <mat-header-cell *matHeaderCellDef class="font-bold">Weekly Net</mat-header-cell>
+                <mat-cell *matCellDef="let record" class="font-medium">${{ record.weekly.net_pay | number:'1.2-2' }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="monthly.gross">
+                <mat-header-cell *matHeaderCellDef class="font-bold">Monthly Gross</mat-header-cell>
+                <mat-cell *matCellDef="let record" class="font-medium">${{ record.monthly.gross | number:'1.2-2' }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="yearly.net">
+                <mat-header-cell *matHeaderCellDef class="font-bold">Yearly Net</mat-header-cell>
+                <mat-cell *matCellDef="let record" class="font-medium">${{ record.yearly.net | number:'1.2-2' }}</mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-100"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" 
+                       class="hover:bg-gray-50 border-b border-gray-100"></mat-row>
+            </mat-table>
+            <div *ngIf="!records || records.length === 0" class="text-center py-8 text-gray-500">
+              <mat-icon class="text-4xl mb-2 text-gray-300">receipt</mat-icon>
+              <p>No records available</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  
+      <!-- Right Column - Financial Assistant -->
+      <div class="lg:col-span-1">
+        <mat-card class="rounded-xl shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+          <mat-card-header class="mb-4">
+            <mat-card-title class="text-xl font-semibold">Financial Assistant</mat-card-title>
+            <mat-card-subtitle>AI-powered guidance</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="flex-grow flex flex-col">
+            <div class="mb-4 flex-grow overflow-y-auto max-h-96 p-2 space-y-4">
+              <div *ngFor="let msg of messages" class="space-y-2">
+                <div class="flex justify-end">
+                  <div class="bg-blue-100 rounded-lg p-3 max-w-[80%]">
+                    <p class="text-sm font-medium text-blue-800">You:</p>
+                    <p>{{ msg.query }}</p>
+                  </div>
+                </div>
+                <div class="flex justify-start">
+                  <div class="bg-gray-100 rounded-lg p-3 max-w-[80%]">
+                    <p class="text-sm font-medium text-gray-700">Assistant:</p>
+                    <p>{{ msg.response }}</p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="messages.length === 0" class="text-center py-8 text-gray-500 h-full flex items-center justify-center">
+                <div>
+                  <mat-icon class="text-4xl mb-2 text-gray-300">chat</mat-icon>
+                  <p>Ask me anything about your finances</p>
+                </div>
+              </div>
+            </div>
+            <form [formGroup]="chatForm" (ngSubmit)="onChatSubmit()" class="mt-auto">
+              <div class="flex gap-2">
+                <mat-form-field appearance="outline" class="flex-grow">
+                  <mat-label>Ask a question</mat-label>
+                  <input matInput formControlName="query" required>
+                  <mat-icon matPrefix>question_answer</mat-icon>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="chatForm.invalid" 
+                        class="h-[56px] w-[56px] min-w-[56px] flex items-center justify-center">
+                  <mat-icon>send</mat-icon>
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

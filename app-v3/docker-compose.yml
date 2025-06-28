@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./app:/app
+    environment:
+      - NODE_ENV=development
+    command: npm start -- --host 0.0.0.0
+
+  salary-api:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./financial_records.json:/app/financial_records.json
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped

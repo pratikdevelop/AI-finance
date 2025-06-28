@@ -1,0 +1,12 @@
+flask
+flask-jwt-extended
+flask-bcrypt
+pandas
+scikit-learn
+numpy
+python-dotenv
+gunicorn
+langchain
+langchain-openai
+flask-cors 
+pymongo

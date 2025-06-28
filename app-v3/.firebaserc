@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "app-v1"
+  },
+  "targets": {
+      "hosting": {
+        "app-v1": [
+          "ai-finance-management"
+        ]
+      }
+  },
+  "etags": {}
+}
