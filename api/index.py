@@ -43,7 +43,7 @@ CORS(app, resources={
 socketio = SocketIO(app, cors_allowed_origins="http://localhost:4200", cors_credentials=True)
 
 # Initialize MongoDB client
-mongo_client = pymongo.MongoClient(os.getenv('MONGODB_URI', 'mongodb+srv://decisionmaker707:KZF6njP1WucBCv6r@cluster0.sxwstyz.mongodb.net/app?retryWrites=true&w=majority&appName=Cluster0'))
+mongo_client = pymongo.MongoClient(os.getenv('MONGODB_URI', 'YOUR-MONGOURL'))
 db = mongo_client['financial_tracker']
 users_collection = db['users']
 records_collection = db['financial_records']
